@@ -36,7 +36,7 @@ function Category() {
         const querySnap = await getDocs(q);
         const listings = [];
 
-        console.log(querySnap);
+        //console.log(querySnap);
 
         querySnap.forEach((doc) => {
           return listings.push({

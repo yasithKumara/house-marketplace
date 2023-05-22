@@ -46,8 +46,6 @@ function SignIn() {
       // formDataCopy.timestamp = serverTimestamp()
 
       // await setDoc(doc(db, 'users', user.uid) ,formDataCopy)
-        console.log('no errors', user
-        )
       navigate("/");
     } catch (error) {
       toast.error('Incorrect User Credentials')
