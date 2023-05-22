@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import SignIn from "./SignIn";
 import { getAuth, updateProfile } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
+import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
+import { ReactComponent as homeIcon } from "../assets/svg/homeIcon.svg";
 
 function Profile() {
   const [changeDetails, setChangeDetails] = useState(false);
@@ -24,28 +26,28 @@ function Profile() {
 
   const { name, email } = formData;
 
-  const onSubmit = async() => {
+  const onSubmit = async () => {
     try {
-      if(auth.currentUser.displayName !== name){
+      if (auth.currentUser.displayName !== name) {
         //update user
-        await updateProfile(auth.currentUser, {displayName:name})
+        await updateProfile(auth.currentUser, { displayName: name });
         //update db
-        const userRef = doc(db, 'users', auth.currentUser.uid)  
-        await updateDoc(userRef, { 
-          name
-        }) 
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        await updateDoc(userRef, {
+          name,
+        });
       }
     } catch (error) {
-      toast.error('Could not update profile details')
+      toast.error("Could not update profile details");
     }
   };
 
-  const onChange = (e) =>{
+  const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.id]:e.target.value
-    }))
-  }
+      [e.target.id]: e.target.value,
+    }));
+  };
 
   return (
     <>
@@ -83,13 +85,20 @@ function Profile() {
               <input
                 type="text"
                 id="email"
-                className={!changeDetails ? "profileEmail" : "profileEmailActive"}
+                className={
+                  !changeDetails ? "profileEmail" : "profileEmailActive"
+                }
                 disabled={!changeDetails}
                 value={email}
                 onChange={onChange}
               />
             </form>
           </div>
+          <Link to="/create-listing" className="createListing">
+            <img src={homeIcon} alt="homeIcon" />
+            <p>Sell or rent your home</p>
+            <img src={ArrowRightIcon} alt="arrow right" />
+          </Link>
         </main>
       </div>
     </>
