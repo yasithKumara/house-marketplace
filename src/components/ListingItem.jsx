@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as DeleteIcon } from "../assets/svg/deleteIcon.svg";
+import { ReactComponent as EditIcon } from "../assets/svg/editIcon.svg";
 import bedIcon from "../assets/svg/bedIcon.svg";
 import bathtubIcon from "../assets/svg/bathtubIcon.svg";
 
-function ListingItem({ listing, id, onDelete}) {
-
+function ListingItem({ listing, id, onDelete, onEdit }) {
   return (
     <li>
       <Link
@@ -29,21 +29,40 @@ function ListingItem({ listing, id, onDelete}) {
               : listing.regularPrice
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  {listing.type === 'rent' && ' / Month'}
+            {listing.type === "rent" && " / Month"}
           </p>
           <div className="categoryListingInfoDiv">
-            <img src={bedIcon} alt='bed' />
-            <p className="categoryListingInfoText">{listing.bedrooms > 1 ? `${listing.bedrooms} Bedrooms` : '1 Bedroom'}  </p>
-            <img src={bathtubIcon} alt='bathtub' />
-            <p className="categoryListingInfoText">{listing.bathrooms > 1 ? `${listing.bathrooms} Bathrooms` : '1 Bathroom'}  </p>
+            <img src={bedIcon} alt="bed" />
+            <p className="categoryListingInfoText">
+              {listing.bedrooms > 1
+                ? `${listing.bedrooms} Bedrooms`
+                : "1 Bedroom"}{" "}
+            </p>
+            <img src={bathtubIcon} alt="bathtub" />
+            <p className="categoryListingInfoText">
+              {listing.bathrooms > 1
+                ? `${listing.bathrooms} Bathrooms`
+                : "1 Bathroom"}{" "}
+            </p>
           </div>
         </div>
       </Link>
 
-            {onDelete && (
-                <DeleteIcon className="removeIcon" fill="rgb(230, 70,60)" onClick={()=> onDelete(listing.id, listing.name)} />
-            )}
+      {onDelete && (
+        <DeleteIcon
+          className="removeIcon"
+          fill="rgb(230, 70,60)"
+          onClick={() => onDelete(listing.id, listing.name)}
+        />
+      )}
 
+      {onEdit && (
+        <EditIcon
+          className="editIcon"
+          fill="rgb(230, 70,60)"
+          onClick={() => onEdit(listing.id, listing.name)}
+        />
+      )}
     </li>
   );
 }
